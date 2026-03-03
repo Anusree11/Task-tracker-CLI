@@ -59,6 +59,35 @@ def delete_tasks(task_id):
         
     print("Id not found")
 
+def mark_in_progress(task_id):
+    tasks= load_tasks()
+    for task in tasks:
+        if task["id"] == task_id:
+            task["status"] = "In progress"
+            task["updatedAt"] = datetime.now().strftime("%y-%m-%D %H:%M:%S")
+            print("Status updated to In progress")
+            save_tasks(tasks)
+            return
+        
+    print("Id not found")
+
+def list_all():
+    tasks= load_tasks()
+
+    for task in tasks:
+        print(task)
+        return
+    print("No data found")
+
+def list_status(status):
+    tasks =load_tasks()
+    for task in tasks:
+        if task["status"] == status:
+            print(task)
+            return
+    print("No data found")
+
+
             
         
 
@@ -92,6 +121,21 @@ def main():
         task_id = int(sys.argv[2])
 
         delete_tasks(task_id)
+
+    if command == "mark-in-progress":
+        task_id = int(sys.argv[2])
+        
+        mark_in_progress(task_id)
+
+    if command == "list" and len(sys.argv) == 2:
+            list_all()
+    
+    elif command == "list" and len(sys.argv) > 2:
+            
+            status = sys.argv[2]
+            list_status(status)
+        
+
         
 
     
